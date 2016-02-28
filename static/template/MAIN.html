@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7 CheckLog">{{CheckLog}}</div>
+        <div class="col-md-5">
+            <header></header>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-1">
+            <ul class="Msg" style="list-style: none; display: none" id="MsgPanel">
+                <li ng-repeat="msg in Message">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">{{msg.user}}</div>
+                        <div class="panel-body">
+                            {{msg.content}}
+                        </div>
+                        <div class="panel-footer">
+                            <small>{{msg.time}}</small>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <div class="container-fluid">
+                <div class="col-md-6">
+                    <div class="user-header">
+                        <img src="images/default-user.jpg" alt="..." class="img-thumbnail">
+                    </div>
+                    <div class="form-group">
+                        name: <label ng-bind="user_nickname"></label><br/>
+                        <button class="btn btn-primary btn-sm LogSignbtn" ng-click="getMsg()" id="Renew">Renew</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success btn-sm" data-toggle="collapse" data-target="#speak" id="Say">Speak</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="collapse" id="speak">
+                        <textarea class="form-control" rows="4" id="spk_content"></textarea>
+                        <div class="form-group LogSignbtn">
+                            <button class="btn btn-default" ng-click="">cancle</button>&nbsp;
+                            <button class="btn btn-primary" ng-click="SaveSpeaking()">send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
