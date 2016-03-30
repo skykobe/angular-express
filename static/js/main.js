@@ -6,5 +6,8 @@ app.config(function($routeProvider) {
 	}).when('/Main', {
 		templateUrl: 'template/MAIN.html',
 		controller: 'Main'
+	}).when('/MyBlog', {
+		 templateUrl: 'template/blog.html',
+		 controller: 'BLOG'
 	})
 });

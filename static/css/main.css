@@ -1,7 +1,7 @@
 body {
     background: URL('/images/bg.jpg');
-    background-size: 80%;
-    background-repeat: no-repeat;
+    background-size: 85%;
+    /*background-repeat: no-repeat;*/
 }
 #logWin {
     padding: 30% 30% 10% 25%;
@@ -37,4 +37,40 @@ body {
     color: red;
     font-size: 25px;
     font-style: italic;
+}
+.user_in_blog {
+    background-color:rgba(20,255,255,0.35);
+    padding: 2% 2% 1% 2%;
+}
+/*
+写一些动画效果
+*/
+@-webkit-keyframes leftFade {
+    from {
+        width: 100%;
+        opacity: 1;
+    }
+    to {
+        width: 0px;
+        opacity: 0；
+    }
+}
+@-webkit-keyframes rightFade {
+    from {     
+        opacity: 1;
+    }
+    to {       
+        opacity: 0；
+    }
+}
+.LeftFade {
+    animation: 1.5s leftFade; 
+    width: 0px;
+    opacity: 0;
+
+}
+.RightFade {
+    animation: 1.5s rightFade;
+    opacity: 0;
+    height: 0
 }

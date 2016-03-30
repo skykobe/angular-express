@@ -1,18 +1,13 @@
-var ctl = angular.module('ctl', []);
+var ctl = angular.module('ctl', ['Services']);
 var user = '';
 var x = [];
-ctl.factory('checkLog', function () {
-		return {
-			check: function () {
-				if(!user) {
-					$('#Renew').attr('disabled', 'true');
-					$('#Say').attr('disabled', 'true');
-					return 'Please Log in'
-				}
-			}
-		}
-});
-ctl.controller('LogSign', ['$scope', '$http', function($scope, $http) {
+ctl.controller('LogSign', ['$scope', '$http', 'checkRem', function($scope, $http, checkRem) {
+	var r = checkRem.result();
+	$scope.UserName = r.username;
+	$scope.PassWord = r.pass;
+	if($scope.UserName && $scope.PassWord) {
+		$('#checknote').prop('checked', true);
+	}
 	$scope.warm_name = '';
 	$scope.warm_pass = '';
 	$scope.sign_name = '';
@@ -50,12 +45,19 @@ ctl.controller('LogSign', ['$scope', '$http', function($scope, $http) {
 		}
 	};
 	$scope.LogIn = function() {
-		var name = $('#UserName').val();
-		var password = $('#Password').val();
+		var name = $scope.UserName;
+		var pass = $scope.PassWord;
+		if($('#checknote').prop('checked')) {
+			localStorage.RemenberUser = name;
+			localStorage.RemenberPass = pass;
+		} else {
+			localStorage.RemenberUser = '';
+			localStorage.RemenberPass = '';
+		};
 		if(!name) {
 			$scope.warm_name = 'Please input user name';
 			$scope.warm_pass = '';
-		} else if(!password) {
+		} else if(!pass) {
 			$scope.warm_pass = 'Please input the password';
 			$scope.warm_name = '';
 		} else {
@@ -63,8 +65,8 @@ ctl.controller('LogSign', ['$scope', '$http', function($scope, $http) {
 				url: '/GoLog',
 				method: 'post',
 				data: {
-					name: name,
-					password: password
+					name: $scope.UserName,
+					password: $scope.PassWord
 				}
 			}).success(function(data, status, header, config) {
 				//$scope.warm_name = data;
@@ -93,35 +95,27 @@ ctl.controller('LogSign', ['$scope', '$http', function($scope, $http) {
 			})
 	};
 }])
-ctl.controller('Main', ['$scope', '$http', 'checkLog', function($scope, $http, checkLog) {
+ctl.controller('Main', ['$scope', '$http', '$interval', '$location', 'checkLog', function($scope, $http, $interval, $location, checkLog) {
 		$scope.CheckLog = checkLog.check();
 		$scope.user_nickname = user;
-		$scope.Message = [];
+		$scope.Message;
 		$scope.getMsg = function () {
-			$('#MsgPanel').css('display', 'none');
 			$("#MsgPanel").fadeIn();
 			$scope.Message = []; //在第二次调用的时候除去原本的数据，以免重复push相同的内容
 			$http({
 				url: '/getMsg',
 				method: 'GET'
 			}).success(function (data, status, header, config) {
-				for(var i = 0; i < data.time.length; i++) {
-					var D = {
-						time: data.time[i],
-						content: data.content[i],
-						user: data.user[i]
-					};
-					$scope.Message.push(D);
-				}
+				$scope.Message = data;
 			})
 		};
-		$scope.getMsg();
+		$scope.getMsg();	
 		$scope.SaveSpeaking = function () {
 			$http({
 				url: '/SaveMySpeaking',
 				method: 'POST',
 				data: {
-					user: user,
+					user: $scope.user_nickname,
 					content: $('#spk_content').val()
 				}
 			}).success(function (data, status, header, config) {
@@ -129,4 +123,17 @@ ctl.controller('Main', ['$scope', '$http', 'checkLog', function($scope, $http, c
 				$scope.getMsg();
 			})
 		};
+		$scope.toBlog = function () {
+			setTimeout(function (argument) {
+				location.hash = '/MyBlog';
+			}, 1300);
+			$scope.lfade = true;
+			$scope.rfade = true
+		}
 }]);
+ctl.controller('BLOG', ['$scope', '$http', 'MarkdownIn', function ($scope, $http, MarkdownIn) {
+	MarkdownIn.In();
+	$scope.userPhoto = 'images/fav.jpg';
+	$scope.userName = user;
+	
+}])

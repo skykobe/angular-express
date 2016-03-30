@@ -1,15 +1,22 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <div class="jumbotron" style="margin-top: 20%">
+                <h1>Hello!</h1>
+                <p>welcome to use this website, in this: </p> 
+                <p>you can set up your target</p>
+                <p>you also can write you blog by markdown</p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
             <div class="form-horizontal" id="logWin">
                 <div class="form-group">
                     <label class="control-label">User</label>
-                    <input class="form-control" type="text" id="UserName">
+                    <input class="form-control" type="text" ng-model="UserName">
                     <label class="warm_sign" ng-bind="warm_name"></label><br>
                     <label class="control-label">Password</label>
-                    <input class="form-control" type="text" id="Password">
+                    <input class="form-control" type="text" ng-model="PassWord">
                     <label class="warm_sign" ng-bind="warm_pass"></label><br>
                     <div class="checkbox">
                         <label>
