@@ -1,7 +1,7 @@
 var ser = angular.module('Services', []);
 ser.factory('checkRem', function () {
 	return {
-		result: function() {		
+		result: function() {
 				return {
 					username: localStorage.RemenberUser,
 					pass: localStorage.RemenberPass
@@ -11,13 +11,15 @@ ser.factory('checkRem', function () {
 });
 ser.factory('checkLog', function () {
 		return {
-			check: function () {
-				if(!user) {
-					$('#Renew').attr('disabled', 'true');
+			check: function (user) {
+				if((localStorage.RemenberPass && localStorage.RemenberUser) || user) {
+					return true
+				} else {
+					$('#blog').attr('disabled', 'true');
 					$('#Say').attr('disabled', 'true');
 					return false
 				}
-				return true
+
 			}
 		}
 });

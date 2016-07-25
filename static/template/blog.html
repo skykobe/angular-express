@@ -5,10 +5,13 @@
 	</div>
 </div>
 <div class="container-fluid">
-	<div class="col-md-2 col-md-offset-1 user_in_blog">
+	<div class="col-md-2 col-md-offset-1 user_in_blog" ng-click="MouseIn()" ng-style="BgColor">
 		 <div style="width: 45%; margin: 0 auto">
 		 	<img src="{{userPhoto}}" style="width: 100%">
-		 </div>	 
+		 </div>
 		 <bloginfo></bloginfo>
+	</div>
+	<div class="col-md-8">
+		<blogpaper></blogpaper>
 	</div>
 </div>

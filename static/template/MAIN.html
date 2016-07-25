@@ -14,12 +14,12 @@
             <ul class="Msg" style="list-style: none; display: none" id="MsgPanel" ng-class="{LeftFade: lfade}">
                 <li ng-repeat="msg in Message">
                     <div class="panel panel-info">
-                        <div class="panel-heading">{{msg.nickname}}</div>
+                        <div class="panel-heading">时间：{{msg.planTime}}</div>
                         <div class="panel-body">
                             {{msg.content}}
                         </div>
                         <div class="panel-footer">
-                            <small>{{msg.time}}</small>
+                            <small>地点：{{msg.place}}</small>
                         </div>
                     </div>
                 </li>
@@ -29,30 +29,93 @@
             <div class="container-fluid">
                 <div class="col-md-6">
                     <div class="user-header">
-                        <img src="images/default-user.jpg" alt="..." class="img-thumbnail">
+                        <img src="{{userHead}}" alt="..." class="img-thumbnail userSet" data-toggle="modal" data-target="#userSet">
                     </div>
                     <div class="form-group">
                         name: <label ng-bind="user_nickname"></label><br/>
                         <a href="">
-                            <button class="btn btn-primary btn-sm LogSignbtn" ng-click="toBlog()">To My Blog</button>
+                            <button class="btn btn-primary btn-sm LogSignbtn" ng-click="toBlog()" id="blog">To My Blog</button>
                         </a>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-success btn-sm" data-toggle="collapse" data-target="#speak" id="Say">Speak</button>
+                        <button class="btn btn-success btn-sm" data-toggle="collapse" data-target="#Newplan" id="Say">new plan</button>
                     </div>
                 </div>
             </div>
             <div class="container-fluid">
                 <div class="col-md-12">
-                    <div class="collapse" id="speak">
-                        <textarea class="form-control" rows="4" id="spk_content"></textarea>
-                        <div class="form-group LogSignbtn">
-                            <button class="btn btn-default" ng-click="">cancle</button>&nbsp;
-                            <button class="btn btn-primary" ng-click="SaveSpeaking()">send</button>
-                        </div>
+                    <div class="collapse" id="Newplan">
+                       <div class="form-group">
+                         <label class="control-label">Time</label>
+                         <input type='text' class="form-control" id='datetimepicker' ng-model="planTime"/>
+                         <label class="control-label">Place</label>
+                         <input class="form-control" type="text" ng-model="planPlace">
+                         <label class="control-label">Content</label>
+                         <textarea class="form-control" rows="4" ng-model="planContent"></textarea>
+                       </div>
+                       <button class="btn btn-default" ng-click="Createplan()">确定</button>
+                       <button class="btn btn-danger" ng-click="hideCollapse()" data-toggle="collapse" data-target="#Newplan">取消</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="userSet">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">System</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="container-fluid">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default" aria-label="Left Align" id=“newHead” ng-click="newHead()">
+                    <span class="glyphicon glyphicon-user"></span>
+                    New head
+                </button>
+                <button type="button" class="btn btn-default" aria-label="Left Align" id="exit" ng-click="exit()">
+                    <span class="glyphicon glyphicon-off"></span>
+                    Exit
+                </button>
+                <div style="display: {{changeHead}}">
+                  <hr/>
+                  <form enctype="multipart/form-data" method="post" action="/pushHead" target="gogo">
+                        <input type="file" name="thumbnail" width='100%'>
+                        <div style="margin-top: 2%;">
+                          <button type="submit" class="btn btn-success btn-xs" ng-click="submitHead()">上传</button>
+                          <button class="btn btn-success btn-xs {{seeNewHead}}" ng-click="preSeeHead()">预览</button>
+                        </div>
+                        <hr/>
+                        <div class="panel panel-default"  style="display: {{headLook}}">
+                          <div class="container-fluid">
+                              <div class="col-md-4">
+                                <img src="{{userHead}}" alt="oldhead" style="width:100%" />
+                              </div>
+                              <div class="col-md-3" style="padding-top: 5%;">
+                                to
+                              </div>
+                              <div class="col-md-4">
+                                <img src="{{userNewHead}}" style="width:100%" />
+                              </div>
+                          </div>
+                        </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="sureHead()">Ok</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+      <iframe name="gogo" style="display:none;">

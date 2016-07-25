@@ -1,4 +1,4 @@
-var dir = angular.module('Directive', []); //感觉我在用directive进行开发的组件化
+var dir = angular.module('Directive', ['BlogComponent']); //感觉我在用directive进行开发的组件化
 dir.directive('header', function() {
 	return {
 		restrict: 'E',
@@ -15,7 +15,7 @@ dir.directive('bloginfo', function () {
 	return {
 		restrict: 'E',
 		template: '<div class="caption">'
-				  + '<ul><li style="font-size: 20px"><span ng-bind="userName"></span></li>' 				
+				  + '<ul><li style="font-size: 20px"><span ng-bind="userName"></span></li>'
  			 	  +	'<li>paper: <span ng-bind="paperNum"></span></li></ul></div>'
 	}
 })
